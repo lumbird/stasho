@@ -2,10 +2,15 @@
   "name": "@lumieslab/stasho",
   "description": "lightweight state management library",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
+  "files": [
+    "/dist"
+  ],
   "keywords": [
     "lightweight",
     "state",
@@ -15,6 +20,6 @@
   "author": "Lumie",
   "license": "SEE LICENSE IN license.txt",
   "devDependencies": {
-    "typescript": "5.3.3"
+    "typescript": "^5.3.3"
   }
 }
