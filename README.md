@@ -13,7 +13,13 @@ Stasho is a minimalistic state management library designed for web applications.
 You can install Stasho via npm:
 
 ```bash
-npm install stasho
+npm install @lumieslab/stasho
+```
+
+if you'd like to build the project yourself:
+
+```bash
+npm run build
 ```
 
 ## License
