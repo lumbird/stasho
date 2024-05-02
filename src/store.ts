@@ -19,6 +19,12 @@ export const Store = <S extends State>(
     let state: S = initialState;
     const memoryState: Map<Function, string> = new Map<Function, string>();
 
+    const setup = () => {
+        memories.forEach((memory) => {
+            memoryState.set(memory, memory(state));
+        });
+    }
+
     // Dispatch a change
     const dispatch = <A extends Action>(action: A): void => {
 
@@ -38,6 +44,9 @@ export const Store = <S extends State>(
     const getMemory = <T extends MemoryCallback<S, unknown>>(reference: T): ReturnType<T> => {
         return memoryState.get(reference) as ReturnType<T>;
     }
+
+    // Initialise the state of the store
+    setup();
 
     // Controls to interact with store
     return {
