@@ -104,3 +104,11 @@ export function filteredReducer<S extends State, A extends Action>(whitelist: ((
     }
 
 }
+export function subReducer<S extends State, V extends keyof S>(
+    slice: V,
+    ...subReducers: ((state: S[V], action: Action) => S[V])[]): (state: S, action: Action) => S {
+    return (state: S, action: Action) => {
+        state[slice] = subReducers.reduce((subState, reducer) => reducer(subState, action), state[slice]);
+        return state;
+    }
+}
