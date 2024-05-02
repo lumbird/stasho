@@ -35,14 +35,3 @@ export const clearToken = (key: string, context: StateContext = defaultTokenCont
     const stateMap: Map<string, unknown> = context.stateMap || (context.stateMap = new Map());
     stateMap.delete(key);
 }
-
-export const useState = <T extends object>(state: T, context?: CombinedContext): [T, (newState: T) => void] => {
-    const id = getIdByObject(state, context);
-
-    return [
-        getObjectByToken(id, context) || state as T,
-        (newState: T) => {
-            setObjectByToken(id, newState);
-        }
-    ]
-}
