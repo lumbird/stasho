@@ -16,7 +16,7 @@ export interface ActionCallbackContext {
     equals: (equalToo: Action | string) => boolean;
 }
 
-export type ActionCallbackWithParams<T> = ((params: T) => Action) & ActionCallbackContext;
+export type ActionCallbackWithParams<T> = ((params: T) => Action & T) & ActionCallbackContext;
 export type ActionCallbackWithoutParams = (() => Action) & ActionCallbackContext;
 
 

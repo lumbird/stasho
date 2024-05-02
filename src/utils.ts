@@ -44,7 +44,7 @@ export function isAction(
 }
 
 export function actionWithParams<T extends object>(type: string): ActionCallbackWithParams<T> {
-    const callback: ((params: T) => Action) = (params: T) => {
+    const callback: ((params: T) => Action & T) = (params: T) => {
         return {
             type,
             ...params
