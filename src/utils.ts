@@ -104,11 +104,19 @@ export function filteredReducer<S extends State, A extends Action>(whitelist: ((
     }
 
 }
-export function subReducer<S extends State, V extends keyof S>(
+
+export function subReducer<S extends State, V extends keyof S, A extends Action>(
     slice: V,
-    ...subReducers: ((state: S[V], action: Action) => S[V])[]): (state: S, action: Action) => S {
-    return (state: S, action: Action) => {
-        state[slice] = subReducers.reduce((subState, reducer) => reducer(subState, action), state[slice]);
+    callback: (state: S[V], action: A) => S[V]): (state: S, action: A) => S {
+    return (state: S, action: A) => {
+        state[slice] = callback(state[slice], action);
         return state;
     }
 }
+
+export function combinedReducers<S extends State>(...callbacks: ((state: S, action: Action & any) => S)[]){
+    return (startingState: S, action: Action & any) => {
+        return callbacks.reduce((state, reducer) => reducer(state, action), startingState);
+    }
+}
+
