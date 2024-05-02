@@ -1,7 +1,6 @@
 export interface StoreDef {
     dispatch: (action: Action) => void,
-    getMemory: <T extends MemoryCallback<any, any>>(reference: T) => ReturnType<T>,
-    getSlice: <T extends SliceCallback<any, any>>(sliceCallback: T) => ReturnType<T>
+    getMemory: <T extends MemoryCallback<any, any>>(reference: T) => ReturnType<T>
 }
 
 // Application State
