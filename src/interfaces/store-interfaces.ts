@@ -1,9 +1,6 @@
-export interface StoreDef<S> {
+export interface StoreDef {
     dispatch: (action: Action) => void,
-    getMemory: <T extends MemoryCallback<any, any>>(reference: T) => ReturnType<T>,
-    attachReducer: (reducer: ReducerCallback<S, any>) => void,
-    attachMemory: (memory: MemoryCallback<S, any>) => void,
-    attachEffect: (effect: EffectCallback<any>) => void
+    getMemory: <T extends MemoryCallback<any, any>>(reference: T) => ReturnType<T>
 }
 
 // Application State

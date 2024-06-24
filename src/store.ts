@@ -11,15 +11,15 @@ import { State, StoreDef, Action, ReducerCallback, MemoryCallback, EffectCallbac
 
 export const Store = <S extends State>(
     initialState: S,
-    reducers: ReducerCallback<S, any>[] = [],
-    memories: MemoryCallback<S, any>[] = [],
-    effects: EffectCallback<any>[] = []
-): StoreDef<S> => {
+    reducers: ReducerCallback<S, any>[],
+    memories: MemoryCallback<S, any>[],
+    effects: EffectCallback<any>[]
+): StoreDef => {
 
     let state: S = initialState;
     const memoryState: Map<Function, string> = new Map<Function, string>();
 
-    const updateMemories = () => {
+    const setup = () => {
         memories.forEach((memory) => {
             memoryState.set(memory, memory(state));
         });
@@ -32,7 +32,9 @@ export const Store = <S extends State>(
         state = reducers.reduce((state, reducerCallback) => reducerCallback(state, action), state);
 
         // Update memory state
-        updateMemories();
+        memories.forEach((memory) => {
+            memoryState.set(memory, memory(state));
+        });
 
         // Call effects on all systems
         effects.forEach((effectCallback) => effectCallback(action));
@@ -43,30 +45,12 @@ export const Store = <S extends State>(
         return memoryState.get(reference) as ReturnType<T>;
     }
 
-    // Attaches the reducer callback to the array of reducers
-    const attachReducer = function(reducerCallback: ReducerCallback<S, any>) {
-        reducers.push(reducerCallback);
-    }
-
-    // Attaches the memory callback to the array of memories
-    const attachMemory = function(memoryCallback: MemoryCallback<S, any>) {
-        memories.push(memoryCallback);
-    }
-
-    // Attaches the effect callback to the array of effects
-    const attachEffect = function(effectCallback: EffectCallback<any>) {
-        effects.push(effectCallback);
-    }
-
     // Initialise the state of the store
-    updateMemories();
+    setup();
 
     // Controls to interact with store
     return {
         dispatch,
         getMemory,
-        attachReducer,
-        attachMemory,
-        attachEffect
     }
 }
