@@ -51,6 +51,7 @@ export const Store = <S extends State>(
     // Attaches the memory callback to the array of memories
     const attachMemory = function(memoryCallback: MemoryCallback<S, any>) {
         memories.push(memoryCallback);
+        updateMemories();
     }
 
     // Attaches the effect callback to the array of effects
