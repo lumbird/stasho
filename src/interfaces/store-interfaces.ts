@@ -6,9 +6,6 @@ export interface StoreDef<S> {
     attachEffect: (effect: EffectCallback<any>) => void
 }
 
-// Application State
-export interface State {}
-
 // Action
 export interface Action {
     type: string;
@@ -24,9 +21,9 @@ export type ActionCallbackWithoutParams = (() => Action) & ActionCallbackContext
 
 
 export type EffectCallback<A extends Action> = (action: A) => void;
-export type ReducerCallback<S extends State, A extends Action> = (oldState: S, action: A) => S;
+export type ReducerCallback<S, A extends Action> = (oldState: S, action: A) => S;
 export type MemoryCallback<IV, OV> = (state: IV) => OV;
-export type SliceCallback<S extends State, V> = (state: S) => V;
+export type SliceCallback<S, V> = (state: S) => V;
 
 export type MemoryCallbackArray<T extends any[]> = {
     [K in keyof T]: K extends 0 ? MemoryCallback<T[K], any> : MemoryCallback<T[K], T[Extract<K, keyof T>]>;

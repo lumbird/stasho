@@ -1,5 +1,4 @@
 import {
-    State,
     Action,
     EffectCallback,
     MemoryCallback,
@@ -87,7 +86,7 @@ export function actionWithoutParams(type: string): ActionCallbackWithoutParams {
 }
 
 
-export function filteredReducer<S extends State, A extends Action>(whitelist: ((() => any) | ((value: any) => any))[], callback: (state: S, action: A) => S) {
+export function filteredReducer<S, A extends Action>(whitelist: ((() => any) | ((value: any) => any))[], callback: (state: S, action: A) => S) {
     return (state: S, action: A): S => {
         // Filter out action types
         const isActionWhitelisted = whitelist.find((actionCaller) => {
@@ -105,7 +104,7 @@ export function filteredReducer<S extends State, A extends Action>(whitelist: ((
 
 }
 
-export function subReducer<S extends State, V extends keyof S, A extends Action>(
+export function subReducer<S, V extends keyof S, A extends Action>(
     slice: V,
     callback: (state: S[V], action: A) => S[V]): (state: S, action: A) => S {
     return (state: S, action: A) => {
@@ -114,7 +113,7 @@ export function subReducer<S extends State, V extends keyof S, A extends Action>
     }
 }
 
-export function combinedReducers<S extends State>(...callbacks: ((state: S, action: Action & any) => S)[]){
+export function combinedReducers<S>(...callbacks: ((state: S, action: Action & any) => S)[]){
     return (startingState: S, action: Action & any) => {
         return callbacks.reduce((state, reducer) => reducer(state, action), startingState);
     }

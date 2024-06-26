@@ -1,4 +1,4 @@
-import { State, StoreDef, Action, ReducerCallback, MemoryCallback, EffectCallback } from './interfaces/store-interfaces';
+import { StoreDef, Action, ReducerCallback, MemoryCallback, EffectCallback } from './interfaces/store-interfaces';
 
 /**
  * Creates a store that can be used to manage state and dispatch actions.
@@ -9,7 +9,7 @@ import { State, StoreDef, Action, ReducerCallback, MemoryCallback, EffectCallbac
  * @constructor
  */
 
-export const Store = <S extends State>(
+export const Store = <S>(
     initialState: S,
     reducers: ReducerCallback<S, any>[] = [],
     memories: MemoryCallback<S, any>[] = [],
